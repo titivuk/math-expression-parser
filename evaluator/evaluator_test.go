@@ -8,8 +8,7 @@ import (
 	"github.com/titivuk/math-expression-parser/parser"
 )
 
-func TestXxx(t *testing.T) {
-
+func TestEval(t *testing.T) {
 	tests := []struct {
 		Input  string
 		Output float64
