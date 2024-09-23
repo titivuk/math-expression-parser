@@ -8,6 +8,9 @@ const (
 	MUL   = "*"
 	DIV   = "/"
 
+	LPAREN = "("
+	RPAREN = ")"
+
 	EOF = "EOF"
 )
 

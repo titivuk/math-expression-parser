@@ -44,6 +44,16 @@ func (l *Lexer) NextToken() token.Token {
 			Token:   token.DIV,
 			Literal: "/",
 		}
+	case ch == '(':
+		tok = token.Token{
+			Token:   token.LPAREN,
+			Literal: "(",
+		}
+	case ch == ')':
+		tok = token.Token{
+			Token:   token.RPAREN,
+			Literal: ")",
+		}
 	case isDigit(ch):
 		start := l.pos
 		end := l.pos
