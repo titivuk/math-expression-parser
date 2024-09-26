@@ -62,6 +62,27 @@ func (l *Lexer) NextToken() token.Token {
 			l.pos++
 		}
 
+		// check if next chat is '.'
+		if end+1 < len(l.input) && l.input[end+1] == '.' {
+			// move to dot
+			end++
+			// move to the first digit of the fractional part (if input is valid)
+			end++
+
+			// after dot must be digit
+			if !isDigit(l.input[end]) {
+				return tok
+			}
+
+			for end+1 < len(l.input) && isDigit(l.input[end+1]) {
+				end++
+				l.pos++
+			}
+		}
+
+		// set l.pos to the last char of the current token
+		l.pos = end
+
 		tok = token.Token{
 			Token:   token.VALUE,
 			Literal: l.input[start : end+1],

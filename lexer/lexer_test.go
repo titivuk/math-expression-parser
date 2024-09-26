@@ -7,7 +7,7 @@ import (
 )
 
 func TestNextToken(t *testing.T) {
-	input := "5 + 12+3 - 2"
+	input := "5 + 12+3 - 2 + 123.456"
 
 	tests := []struct {
 		expectedType    token.TokenType
@@ -20,6 +20,8 @@ func TestNextToken(t *testing.T) {
 		{"VALUE", "3"},
 		{"-", "-"},
 		{"VALUE", "2"},
+		{"+", "+"},
+		{"VALUE", "123.456"},
 		{"EOF", ""},
 	}
 

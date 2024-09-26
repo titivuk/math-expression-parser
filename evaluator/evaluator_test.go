@@ -22,6 +22,7 @@ func TestEval(t *testing.T) {
 		{Input: "(1+3)*2", Output: 8},
 		{Input: "(1+2+3)/3", Output: 2},
 		{Input: "((1+2)*4)/3", Output: 4},
+		{Input: "1.2+1.3", Output: 2.5},
 	}
 
 	for _, tt := range tests {
