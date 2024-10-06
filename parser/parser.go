@@ -33,7 +33,11 @@ var precedences map[token.TokenType]int = map[token.TokenType]int{
 }
 
 func NewParser(l *lexer.Lexer) *Parser {
-	p := &Parser{lexer: l, prefixParseFns: make(map[token.TokenType]prefixParseFn), infixParseFns: make(map[token.TokenType]infixParseFn)}
+	p := &Parser{
+		lexer:          l,
+		prefixParseFns: make(map[token.TokenType]prefixParseFn),
+		infixParseFns:  make(map[token.TokenType]infixParseFn),
+	}
 
 	p.prefixParseFns[token.VALUE] = p.parseValueExpression
 
@@ -62,8 +66,6 @@ type Parser struct {
 
 func (p *Parser) Parse() ast.Node {
 	expression := p.parseExpression(LOWEST)
-	fmt.Printf("result expression: %v\n", expression)
-
 	return expression
 }
 
@@ -76,7 +78,6 @@ func (p *Parser) parseExpression(precedence int) ast.Node {
 	}
 
 	expression := prefixFn()
-	fmt.Printf("prefixOrLeft: %v\n", expression)
 
 	for p.peekToken.Token != token.EOF && precedence < getPrecedence(p.peekToken.Token) {
 		infixFn, ok := p.infixParseFns[p.peekToken.Token]
@@ -115,7 +116,6 @@ func (p *Parser) parseValueExpression() ast.Node {
 	value, _ := strconv.ParseFloat(p.curToken.Literal, 64)
 
 	node := ast.ValueNode{Value: float64(value)}
-	fmt.Printf("parseValueExpression: %v\n", node)
 
 	return node
 }
@@ -125,7 +125,6 @@ func (p *Parser) parseInfixExpression(left ast.Node) ast.Node {
 	node := ast.InfixNode{Left: left, Operator: p.curToken}
 	p.nextToken()
 	node.Right = p.parseExpression(precedence)
-	fmt.Printf("parseInfixExpression: %v\n", node)
 
 	return node
 }
